@@ -12,6 +12,7 @@ namespace s21 {
 template <class T>
 class vector {
  public:
+  // Определение типов
   using value_type = T;
   using reference = T &;
   using const_reference = const T &;
@@ -19,51 +20,58 @@ class vector {
   using const_iterator = const T *;
   using size_type = size_t;
 
-  vector();
-  explicit vector(size_type n);
-  vector(std::initializer_list<value_type> const &items);
-  vector(const vector &v);
-  vector(vector &&v);
-  ~vector();
-  reference operator=(vector &&v);
+  // Конструкторы и деструктор
+  vector();  // Конструктор по умолчанию
+  explicit vector(size_type n);  // Конструктор с заданным размером
+  vector(std::initializer_list<value_type> const
+             &items);  // Конструктор со списком инициализации
+  vector(const vector &v);  // Конструктор копирования
+  vector(vector &&v);       // Конструктор перемещения
+  ~vector();                // Деструктор
 
-  //  ElementAccess
-  reference at(size_type pos);
-  reference operator[](size_type pos);
-  const_reference front();
-  const_reference back();
-  value_type *data();
+  // Операторы
+  reference operator=(vector &&v);  // Оператор присваивания с перемещением
 
-  // Iterators
-  iterator begin();
-  iterator end();
+  // Методы доступа к элементам
+  reference at(size_type pos);  // Доступ к элементу с проверкой на границы
+  reference operator[](size_type pos);  // Доступ к элементу без проверки границ
+  const_reference front();  // Получение первого элемента
+  const_reference back();  // Получение последнего элемента
+  value_type *data();  // Получение указателя на данные
 
-  //  Capacity
-  bool empty();
-  size_type size();
-  size_type max_size();
-  void reserve(size_type new_capacity);
-  size_type capacity();
-  void shrink_to_fit();
+  // Методы для работы с итераторами
+  iterator begin();  // Получение итератора на начало
+  iterator end();    // Получение итератора на конец
 
-  // Modifiers
-  void clear();
-  iterator insert(iterator pos, const_reference value);
-  void erase(iterator pos);
-  void push_back(const_reference value);
-  void pop_back();
-  void swap(vector &other);
+  // Методы для работы с емкостью и размером
+  bool empty();      // Проверка на пустоту
+  size_type size();  // Получение размера
+  size_type max_size();  // Получение максимального размера
+  void reserve(size_type new_capacity);  // Изменение емкости
+  size_type capacity();  // Получение текущей емкости
+  void shrink_to_fit();  // Уменьшение емкости до размера
 
+  // Модификаторы
+  void clear();  // Очистка контейнера
+  iterator insert(iterator pos, const_reference value);  // Вставка элемента
+  void erase(iterator pos);  // Удаление элемента
+  void push_back(const_reference value);  // Добавление элемента в конец
+  void pop_back();  // Удаление последнего элемента
+  void swap(vector &other);  // Обмен содержимым с другим вектором
+
+  // Вставка нескольких элементов
   template <typename... Args>
   iterator insert_many(const_iterator pos, Args &&...args);
 
+  // Добавление нескольких элементов в конец
   template <typename... Args>
   void insert_many_back(Args &&...args);
 
  private:
-  size_t size_;
-  size_t capacity_;
-  value_type *arr_;
+  // Приватные члены класса
+  size_t size_;      // Размер вектора
+  size_t capacity_;  // Емкость вектора
+  value_type *arr_;  // Указатель на массив данных
 };
 
 template <class value_type>
